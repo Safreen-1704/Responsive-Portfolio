@@ -1,0 +1,382 @@
+:root{
+  --bg: #0f1216;
+  --bg-elev: #151a21;
+  --text: #e6e9ef;
+  --muted: #a9b0bd;
+  --primary: #6ea8fe;
+  --accent: #7bd389;
+  --danger: #ff6b6b;
+  --card: #1a2029;
+  --border: #2a3340;
+  --shadow: 0 8px 24px rgba(0,0,0,0.25);
+  --radius: 12px;
+  --maxw: 1100px;
+}
+
+/* Light theme overrides */
+[data-theme="light"] {
+  /* Background: sunflower–tulip inspired gradient */
+  --bg: rgba(255, 255, 255, 0.95);
+  --bg-elev: #ffffff;
+  --text: #1a1a1a;
+  --muted: #555555;
+  
+  /* Primary: sunflower yellow */
+  --primary: #f9d71c;
+  
+  /* Accent: tulip red */
+  --accent: #e63946;
+  
+  /* Danger: rose crimson */
+  --danger: #c53030;
+  
+  /* Card: glassy white */
+  --card: rgba(255, 255, 255, 0.9);
+  
+  /* Border: soft pastel */
+  --border: #f1c0c0;
+  
+  /* Shadow: gentle depth */
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Dynamic flower-inspired background */
+
+[data-theme="dark"] {
+  --bg: rgba(15, 18, 22, 0.95);
+  --bg-elev: #1a2029;
+  --text: #e6e9ef;
+  --muted: #a9b0bd;
+  
+  /* Primary: moonlight blue */
+  --primary: #6ea8fe;
+  
+  /* Accent: comet teal */
+  --accent: #00f5d4;
+  
+  /* Danger: meteor orange */
+  --danger: #ff6b6b;
+  
+  --card: rgba(26, 32, 41, 0.9);
+  --border: #2a3340;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* Celestial background */
+
+
+/* Canvas background element */
+#bg-canvas{
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  transition: background 0.8s ease;
+}
+[data-theme="light"] #bg-canvas {
+  background: linear-gradient(135deg, #fff5ba 0%, #ffdde1 50%, #fbc2eb 100%);
+  /* sunflower yellow → tulip pink → rose pastel */
+}
+
+[data-theme="dark"] #bg-canvas {
+  background: radial-gradient(circle at top center, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  /* deep space gradient: stars, moonlight, comets */
+}
+
+/* Base */
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+body{
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--text);
+  line-height: 1.6;
+  background: var(--bg);
+  padding-top: 80px; /* reserve space for fixed header */
+}
+a{ color: var(--primary); text-decoration: none; }
+a:hover{ text-decoration: underline; }
+img{ max-width: 100%; display: block; }
+.container{ max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+
+/* Header */
+header{
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  z-index: 1000;
+  backdrop-filter: saturate(180%) blur(8px);
+  background: linear-gradient(to right, var(--bg), var(--bg-elev));
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+.nav{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+.brand{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.brand .logo{
+  width: 36px; height: 36px; border-radius: 50%;
+  overflow: hidden; box-shadow: var(--shadow);
+  border: 2px solid var(--border);
+  background: linear-gradient(135deg,var(--primary),var(--accent));
+}
+.brand span{ font-weight:700; font-size:18px; white-space:nowrap; }
+.nav-links{
+  display: flex; gap: 20px; align-items: center;
+  flex-wrap: nowrap; overflow-x: auto; flex-grow: 1; justify-content: flex-start;
+}
+.nav-links a{
+  white-space: nowrap; padding: 8px 12px; border-radius: 8px;
+  color: var(--text); transition: background .2s ease, color .2s ease;
+}
+.nav-links a:hover{ background: var(--bg-elev); color: var(--accent); }
+.theme-toggle{
+  border: 1px solid var(--border); background: var(--bg-elev);
+  color: var(--text); padding: 8px 12px; border-radius: 8px; cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Hero */
+.hero-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 24px;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+/* Avatar container: keep consistent and not taller than content */
+.avatar {
+  width: 120px;
+  height: 200px; /* fixed square to match text height */
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  background: linear-gradient(135deg, #222, #333);
+  flex-shrink: 0;
+}
+.avatar img.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Sections and spacing - normalized */
+section{
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+section + section{
+  margin-top: 8px; /* small gap between sections */
+}
+
+/* Section title */
+.section-title{
+  font-size:20px; font-weight:700; margin-bottom:12px;
+  display:flex; align-items:center; gap:10px;
+}
+.section-title .bar{ flex:1; height:1px; background:var(--border); }
+
+/* Grid and cards — make grids responsive so content fills width */
+.grid{
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-items: start;
+}
+
+/* Keep education three columns on wide screens for that section */
+@media (min-width:1000px){
+  #education .grid{ grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Card styling preserved */
+.card{
+  background: var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow: var(--shadow);
+  padding:20px;
+  backdrop-filter: blur(5px);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-height: 320px;
+}
+
+/* Project & Experience internals */
+.project, .experience{ display:flex; flex-direction:column; height:100%; }
+.thumb{ width:100%; height:120px; overflow:hidden; border-radius:12px; margin:12px 12px 12px 12px; padding:0px; line-height:10; }
+.thumb img.logo-img{ width:100%; height:100%; object-fit:cover; display:block; }
+.project h3, .experience h3{ margin:12px 12px 12px 12px; font-size:18px; }
+.project p, .experience p{ margin:12px 12px 12px 12px; color:var(--muted); }
+
+/* Tags and actions */
+.tags{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+.tag{ font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:var(--bg-elev); color:var(--muted); }
+.actions{ margin-top:auto; display:flex; gap:10px; }
+
+/* Buttons */
+.btn, .code-btn, .certificate-btn{
+  display:inline-flex; align-items:center; gap:8px; padding:10px 16px; border-radius:8px;
+  border:1px solid var(--border); background:var(--bg-elev); color:var(--text); font-weight:600;
+  text-decoration:none; transition: background .25s ease, transform .15s ease; box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+.btn.primary{ background:var(--primary); color:#fff; border-color:transparent; }
+.btn:hover, .code-btn:hover, .certificate-btn:hover{ transform:scale(1.03); background: linear-gradient(135deg,#43e97b,#38f9d7); }
+.btn:active, .code-btn:active, .certificate-btn:active{ background: linear-gradient(135deg,#ff6a00,#ee0979); }
+
+/* Course grid, filters, contact, footer */
+#courseGrid{ display:flex; flex-wrap:wrap; gap:12px; margin-top:16px; }
+.course-tag{ display:inline-block; font-size:14px; font-weight:600; padding:10px 16px; border-radius:999px; background:linear-gradient(135deg,#6ea8fe,#2b6cb0); color:#fff; box-shadow:0 4px 12px rgba(0,0,0,0.15); transition: transform .15s ease; }
+.course-tag:hover{ transform:scale(1.05); background:var(--accent); }
+.filters{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+.filter{ padding:6px 12px; border-radius:999px; border:1px solid var(--border); background:var(--bg-elev); color:var(--text); cursor:pointer; }
+.filter.active{ background:var(--primary); color:#fff; border-color:transparent; }
+
+.contact-info{ display:flex; flex-direction:column; gap:14px; margin-top:20px; }
+.contact-item{ display:flex; align-items:center; gap:12px; font-size:16px; font-weight:600; color:var(--text); text-decoration:none; padding:12px 16px; border-radius:8px; background:var(--bg-elev); border:1px solid var(--border); transition: all .2s ease; }
+.contact-item:hover{ background:var(--primary); color:#fff; transform:translateX(6px); }
+.contact-item .icon{ width:24px; height:24px; object-fit:contain; }
+
+form{ display:grid; gap:12px; }
+input, textarea{ width:100%; padding:10px 12px; border-radius:8px; border:1px solid var(--border); background:var(--bg-elev); color:var(--text); }
+textarea{ min-height:120px; resize:vertical; }
+.form-row{ display:grid; gap:12px; grid-template-columns:1fr; }
+@media (min-width:700px){ .form-row{ grid-template-columns:1fr 1fr; } }
+
+footer{ border-top:1px solid var(--border); padding:24px 0; color:var(--muted); }
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce){ *{ scroll-behavior:auto !important; transition:none !important; } }
+:focus-visible{ outline:2px solid var(--primary); outline-offset:2px; }
+/* ======= Spacing & layout safety patch (paste at end of style.css) ======= */
+
+/* 1) Keep header fixed and set body padding dynamically via JS (see JS below) */
+header {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* 2) Restore container padding and prevent accidental zeroing */
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 20px; /* keep horizontal padding */
+}
+
+/* 3) Normalize section spacing (no global resets of container/card) */
+section {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin: 0;
+}
+section + section {
+  margin-top: 8px; /* small gap between sections */
+}
+
+/* 4) Prevent destructive global resets (undo earlier blanket reset) */
+section, .grid, .project, .experience {
+  margin: 0;
+  /* do NOT reset padding on .container or .card here */
+}
+
+/* 5) Responsive grid: let cards fill the row without left clustering */
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-items: start;
+}
+
+/* 6) Keep education section three columns on wide screens */
+@media (min-width:1000px) {
+  #education .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* 7) Ensure cards can shrink to content and keep actions aligned */
+.card {
+  min-height: 0; /* allow short cards to shrink */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+/* Internship & Experience card layout fix */
+#experience .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  align-items: stretch; /* ensures cards align vertically */
+}
+
+/* Make all experience cards equal height */
+.card.third {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 420px; /* adjust based on tallest card */
+}
+
+/* Ensure content fills space evenly */
+.experience {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Push button to bottom */
+.actions {
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+}
+
+/* Normalize spacing inside cards */
+.experience h3 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+}
+.experience p {
+  margin: 0 0 12px 0;
+  color: var(--muted);
+}
+.tags {
+  margin-bottom: 12px;
+}
+
+/* 8) Avoid images or thumbs forcing extra vertical gaps */
+.thumb, .avatar, .thumb img, .avatar img {
+  display: block;
+  margin: 0;
+  line-height: 0;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* 9) Small safety: headings inside sections shouldn't add unexpected top margin */
+section h1, section h2, section h3, section p, section ul {
+  margin-top: 0;
+}
